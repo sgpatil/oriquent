@@ -1,0 +1,18 @@
+{
+    "name": "sgpatil/orientdb",
+    "description": "Laravel Orientdb Driver",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sumit Patil",
+            "email": "sgpatil.2803@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+	"sgpatil/orientdb-php": "@dev"	
+	},
+	"autoload": {
+    "psr-0": {"Sgpatil\\Orientdb":"src/"}
+  }
+}

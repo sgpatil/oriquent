@@ -1,0 +1,63 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "hash": "eb9c02e18be59c3503ff027b4b7380ae",
+    "packages": [
+        {
+            "name": "sgpatil/orientdb-php",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sgpatil/orientdb-php.git",
+                "reference": "db673e4392db455edc41245f5d8560de3afdb960"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sgpatil/orientdb-php/zipball/db673e4392db455edc41245f5d8560de3afdb960",
+                "reference": "db673e4392db455edc41245f5d8560de3afdb960",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Sgpatil\\Orientphp": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sumit Patil",
+                    "email": "sgpatil.2803@gmail.com"
+                }
+            ],
+            "description": "PHP Wrapper for the Orientdb database (REST)",
+            "keywords": [
+                "PHP Orientdb Driver",
+                "database",
+                "graph",
+                "orientdb"
+            ],
+            "time": "2015-05-08 09:51:48"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "dev",
+    "stability-flags": {
+        "sgpatil/orientdb-php": 20
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}
