@@ -1,8 +1,8 @@
 
-# Orientdb Driver for Laravel 4
+# Orientdb Driver for Laravel 5
 
 
-Orientdb Graph Eloquent Driver for Laravel 4
+Orientdb Graph Eloquent Driver for Laravel 5
 
 ## Quick Reference
 
@@ -17,22 +17,22 @@ Add the package to your `composer.json` and run `composer update`.
 ```json
 {
     "require": {
-        "sgpatil/orientdb": "@dev"
+        "sgpatil/orientdb-laravel-5": "dev-master"
     }
 }
 ```
 
-Add the service provider in `app/config/app.php`:
+Add the service provider in `config/app.php`:
 
 ```php
-'Sgpatil\Orientdb\OrientdbServiceProvider',
+Sgpatil\Orientdb\OrientdbServiceProvider::class,
 ```
 
 This will register all the required classes for this package.
 
 ## Database Configuration
 
-Open `app/config/database.php`
+Open `config/database.php`
 make `orientdb` your default connection:
 
 ```php
