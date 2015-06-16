@@ -510,17 +510,5 @@ abstract class Model extends IlluminateModel {
 
         return $dirty;
     }
-    
-    /**
-     * Get all of the models from the database.
-     *
-     * @param  array  $columns
-     * @return \Illuminate\Database\Eloquent\Collection|static[]
-     */
-    public static function all($columns = ['*'])
-    {
-        $instance = new static;
 
-        return $instance->newQuery()->get($columns);
-    }
 }

@@ -117,6 +117,7 @@ class Grammar extends IlluminateGrammar {
 //        {
 //            return 'id(' . $this->query->modelAsNode() . ')';
 //        }
+
         //return $this->query->modelAsNode() . '.' . $value;
         return $value;
     }

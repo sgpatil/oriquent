@@ -62,34 +62,16 @@ class Builder extends IlluminateBuilder {
         return $this;
     }
 
-     /**
-     * Execute the query as a "select" statement.
-     *
-     * @param  array  $columns
-     * @return array|static[]
-     */
-    public function get($columns = ['*'])
-    {
-        
-        $models = $this->getModels($columns);
 
-        // If we actually found models we will also eager load any relationships that
-        // have been specified as needing to be eager loaded, which will solve the
-        // n+1 query issue for the developers to avoid running a lot of queries.
-        if (count($models) > 0) {
-            $models = $this->eagerLoadRelations($models);
-        }
 
-        return $this->model->newCollection($models);
-        
-    }
-    
+
     /**
 	 * Get the hydrated models without eager loading.
 	 *
 	 * @param  array  $properties
 	 * @return array|static[]
 	 */
+
 	 public function getModels($columns = ['*'])
     {
         $results = $this->query->get($columns);
@@ -99,43 +81,6 @@ class Builder extends IlluminateBuilder {
         return $this->model->hydrate($results->getData(), $connection)->all();
     }
 
-    /**
-     * Turn Orientdb result set into the corresponding model
-     * @param  string $connection
-     * @param  \\Orientdb\Query\ResultSet $results
-     * @return array
-     */
-    protected function resultsToModels($connection, ResultSet $results)
-    {
-        $models = [];
-
-        if ($results->valid())
-        {
-            $columns = $results->getColumns();
-
-            foreach ($results as $result)
-            {
-                $attributes = $this->getProperties($columns, $result);
-
-                // Now that we have the attributes, we first check for mutations
-                // and if exists, we will need to mutate the attributes accordingly.
-                if ($this->shouldMutate($attributes))
-                {
-                    $models[] = $this->mutateToOrigin($result, $attributes);
-                }
-                // This is a regular record that we should deal with the normal way, creating an instance
-                // of the model out of the fetched attributes.
-                else
-                {
-                    $model = $this->model->newFromBuilder($attributes);
-                    $model->setConnection($connection);
-                    $models[] = $model;
-                }
-            }
-        }
-
-        return $models;
-    }
 
     /**
      * Mutate a result back into its original Model.
