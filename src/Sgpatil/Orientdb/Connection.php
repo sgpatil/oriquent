@@ -231,12 +231,10 @@ class Connection extends IlluminateConnection {
         return $this->run($query, $bindings, function(self $me, $query, array $bindings) {
                     if ($me->pretending())
                         return 0;
-
                     // For update or delete statements, we want to get the number of rows affected
                     // by the statement and return that back to the developer. We'll first need
                     // to execute the statement and then we'll use CypherQuery to fetch the affected.
-                    $statement = $me->getCypherQuery($query, $bindings);
-
+                    $statement = $me->getBatchQuery($query, $bindings);
                     return $statement->getResultSet();
                 });
     }
@@ -334,8 +332,8 @@ class Connection extends IlluminateConnection {
                     $property = (!is_numeric($key)) ? $key : 'id';
                 }
 
-                if ($property == 'id')
-                    $property = $grammar->getIdReplacement($property);
+//                if ($property == 'id')
+//                    $property = $grammar->getIdReplacement($property);
 
                 $prepared[$property] = $real;
             }

@@ -210,7 +210,8 @@ class Grammar extends IlluminateGrammar {
         if($column == 'id')
         {
             $from = ( ! is_null($this->query)) ? $this->query->from : null;
-            $column = $this->getIdReplacement('id('. $this->modelAsNode($from) .')');
+            //$column = $this->getIdReplacement('id('. $this->modelAsNode($from) .')');
+            $column = $this->getIdReplacement('id');
         }
         // When it's a form of node.attribute we'll just remove the '.' so that
         // we get a consistent form of binding key/value pairs.

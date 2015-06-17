@@ -185,21 +185,24 @@ class Builder extends IlluminateQueryBuilder {
      * @throws \InvalidArgumentException
      */
     public function where($column, $operator = null, $value = null, $boolean = 'and') {
-        // If the column is an array, we will assume it is an array of key-value pairs
+         // If the column is an array, we will assume it is an array of key-value pairs
         // and can add them each as a where clause. We will maintain the boolean we
         // received when the method was called and pass it into the nested where.
         if (is_array($column)) {
-            return $this->whereNested(function(IlluminateQueryBuilder $query) use ($column) {
-                        foreach ($column as $key => $value) {
-                            $query->where($key, '=', $value);
-                        }
-                    }, $boolean);
+            return $this->whereNested(function ($query) use ($column) {
+                foreach ($column as $key => $value) {
+                    $query->where($key, '=', $value);
+                }
+            }, $boolean);
         }
 
+        // Here we will make some assumptions about the operator. If only 2 values are
+        // passed to the method, we will assume that the operator is an equals sign
+        // and keep going. Otherwise, we'll require the operator to be passed in.
         if (func_num_args() == 2) {
-            list($value, $operator) = array($operator, '=');
+            list($value, $operator) = [$operator, '='];
         } elseif ($this->invalidOperatorAndValue($operator, $value)) {
-            throw new \InvalidArgumentException("Value must be provided.");
+            throw new InvalidArgumentException('Illegal operator and value combination.');
         }
 
         // If the columns is actually a Closure instance, we will assume the developer
@@ -212,8 +215,8 @@ class Builder extends IlluminateQueryBuilder {
         // If the given operator is not found in the list of valid operators we will
         // assume that the developer is just short-cutting the '=' operators and
         // we will set the operators to '=' and set the values appropriately.
-        if (!in_array(mb_strtolower($operator), $this->operators, true)) {
-            list($value, $operator) = array($operator, '=');
+        if (!in_array(strtolower($operator), $this->operators, true)) {
+            list($value, $operator) = [$operator, '='];
         }
 
         // If the value is a Closure, it means the developer is performing an entire
@@ -235,33 +238,10 @@ class Builder extends IlluminateQueryBuilder {
         // will be bound to each SQL statements when it is finally executed.
         $type = 'Basic';
 
-        $property = $column;
-
-        // When the column is an id we need to treat it as a graph db id and transform it
-        // into the form of id(n) and the typecast the value into int.
-        if ($column == 'id') {
-            $column = 'id(' . $this->modelAsNode() . ')';
-            $value = intval($value);
-        }
-        // When it's been already passed in the form of NodeLabel.id we'll have to
-        // re-format it into id(NodeLabel)
-        elseif (preg_match('/^.*\.id$/', $column)) {
-            $parts = explode('.', $column);
-            $column = sprintf('%s(%s)', $parts[1], $parts[0]);
-            $value = intval($value);
-        }
-        // Also if the $column is already a form of id(n) we'd have to type-cast the value into int.
-        elseif (preg_match('/^id\(.*\)$/', $column))
-            $value = intval($value);
-
-        $binding = $this->prepareBindingColumn($column);
-
-        $this->wheres[] = compact('type', 'binding', 'column', 'operator', 'value', 'boolean');
-
-        $property = $this->wrap($binding);
+        $this->wheres[] = compact('type', 'column', 'operator', 'value', 'boolean');
 
         if (!$value instanceof Expression) {
-            $this->addBinding([$property => $value], 'where');
+            $this->addBinding($value, 'where');
         }
 
         return $this;
@@ -797,6 +777,17 @@ class Builder extends IlluminateQueryBuilder {
         //if ( ! is_null($this->cacheMinutes)) return $this->getCached($columns);
 
         return $this->getFresh($columns);
+    }
+    
+     /**
+     * Alias to set the "limit" value of the query.
+     *
+     * @param  int  $value
+     * @return \Illuminate\Database\Query\Builder|static
+     */
+    public function take($value)
+    {
+        return $this->limit($value);
     }
 
 }
