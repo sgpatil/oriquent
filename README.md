@@ -110,3 +110,4 @@ $user = User::find(1);
 $user->name = "New Name";
 $user->save();
 ```
+Want to learn more? [See the wiki.](https://github.com/sgpatil/orientdb-laravel-5/wiki)
