@@ -207,15 +207,15 @@ class Grammar extends IlluminateGrammar {
         $column = preg_replace('/[(|)]/', '', $column);
         // Check whether the column is still id so that we transform it to the form id(n) and then
         // recursively calling ourself to reformat accordingly.
-        if($column == 'id')
-        {
-            $from = ( ! is_null($this->query)) ? $this->query->from : null;
-            //$column = $this->getIdReplacement('id('. $this->modelAsNode($from) .')');
-            $column = $this->getIdReplacement('id');
-        }
+//        if($column == 'id')
+//        {
+//            $from = ( ! is_null($this->query)) ? $this->query->from : null;
+//            //$column = $this->getIdReplacement('id('. $this->modelAsNode($from) .')');
+//            $column = $this->getIdReplacement('id');
+//        }
         // When it's a form of node.attribute we'll just remove the '.' so that
         // we get a consistent form of binding key/value pairs.
-        elseif (strpos($column, '.'))
+        if (strpos($column, '.'))
         {
             return str_replace('.', '', $column);
         }

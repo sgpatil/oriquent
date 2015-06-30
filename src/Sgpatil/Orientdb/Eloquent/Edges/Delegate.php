@@ -129,7 +129,7 @@ abstract class Delegate {
         }
 
         $direction = "Direction". $direction;
-
+RETURN "OUT";
         return constant("\Orientdb\Relationship::". $direction);
     }
 

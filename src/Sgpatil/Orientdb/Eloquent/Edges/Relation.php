@@ -201,8 +201,10 @@ abstract class Relation extends Delegate {
          */
         if ($this->unique and ! $this->exists())
         {
+            
             $parent = $this->asNode($this->parent);
-            $existing = $parent->getFirstRelationship((array) $this->type, $this->getRealDirection($this->direction));
+            
+           // $existing = $parent->getFirstRelationship((array) $this->type, $this->getRealDirection($this->direction));
 
             if ( ! empty($existing))
             {

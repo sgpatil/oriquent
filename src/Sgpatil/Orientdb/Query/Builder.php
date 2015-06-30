@@ -111,7 +111,10 @@ class Builder extends IlluminateQueryBuilder {
         $values = $this->cleanBindings($values);
         $res = $this->connection->insert($sql);
         $res = $res->getData();
-        return $res[0]['@rid'];
+        if(isset($res[0])){
+            return $res[0]['@rid'];
+        }
+        return false;
     }
 
     /**
@@ -293,8 +296,8 @@ class Builder extends IlluminateQueryBuilder {
 
         $property = $column;
 
-        if ($column == 'id')
-            $column = 'id(' . $this->modelAsNode() . ')';
+//        if ($column == 'id')
+//            $column = 'id(' . $this->modelAsNode() . ')';
 
         $this->wheres[] = compact('type', 'column', 'values', 'boolean');
 
@@ -487,7 +490,7 @@ class Builder extends IlluminateQueryBuilder {
     public function matchRelation($parent, $related, $relatedNode, $relationship, $property, $value = null, $direction = 'out') {
         $parentLabels = $parent->getTable();
         $relatedLabels = $related->getTable();
-        $parentNode = $this->modelAsNode($parentLabels);
+        $parentNode = $this->modelAsNode([$parentLabels]);
 
         $this->matches[] = array(
             'type' => 'Relation',

@@ -535,7 +535,6 @@ abstract class Model extends IlluminateModel {
         if ($this->exists) {
           
             $saved = $this->performUpdate($query, $options);
-              exit("here");
         }
 
         // If the model is brand new, we'll insert it into our database and set the
@@ -544,7 +543,6 @@ abstract class Model extends IlluminateModel {
         else {
             $saved = $this->performInsert($query, $options);
         }
-exit("ttt");
         if ($saved) {
             $this->finishSave($options);
         }
