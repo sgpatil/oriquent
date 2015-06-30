@@ -24,7 +24,7 @@ class OrientdbServiceProvider extends ServiceProvider {
 	public function register()
 	{
 
-               $this->app->register('Sgpatil\Orientdb\MigrationServiceProvider');
+        $this->app->register('Sgpatil\Orientdb\MigrationServiceProvider');
 
         $this->app['db']->extend('orientdb', function($config) {
             return new Connection($config);
@@ -62,7 +62,6 @@ class OrientdbServiceProvider extends ServiceProvider {
         });
 
         $this->app->bind('CreateOrientdbMigration', function($app) {
-            //print_r($app);
             $database = $this->app->make('orientdb.database');
             return new CreateOrientdbMigration($database);
         });

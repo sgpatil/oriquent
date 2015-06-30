@@ -74,14 +74,7 @@ class Connection extends IlluminateConnection {
      * @return
      */
     public function createConnection() {
-
-        //exit('testing');
-        /*
-        // below code is used to create connection usinf Orientdb-odm
-        $parameters = BindingParameters::create($this->config);
-        $orient = new Binding($parameters);
-        return $orient;
-         */
+        // below code is used to create connection usinf Orientdb
         $client = new OriClient($this->getHost(), $this->getPort(), $this->getDatabase());
         $client->getTransport()->setAuth($this->getUsername(), $this->getPassword());
         return $client;

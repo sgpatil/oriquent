@@ -45,7 +45,6 @@ class CreateOrientdbMigration extends Command {
 	public function fire()
 	{
             $node = $this->builder->createClass($this->argument('name'));
-            // echo $this->argument('name');
             $this->info('Class created successfully.');
 	}
 

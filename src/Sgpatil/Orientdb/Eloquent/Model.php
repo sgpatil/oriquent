@@ -98,16 +98,6 @@ abstract class Model extends IlluminateModel {
         return array(str_replace('\\', '', get_class($this)));
     }
 
-    /**
-	 * Get the table associated with the model.
-	 *
-	 * @return string
-	 */
-//	public function getTable()
-//	{
-//            exit('ok here it is');
-//		return $this->getDefaultNodeLabel();
-//	}
 
     /**
      * Define an inverse one-to-one or many relationship.

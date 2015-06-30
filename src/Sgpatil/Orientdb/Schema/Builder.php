@@ -39,7 +39,6 @@ class Builder {
 	 */
 	public function hasTable($table)
 	{
-            //exit($table);
 		//$sql = $this->grammar->compileTableExists();
 		$table = $this->connection->getTablePrefix().$table;
 		return count($this->connection->select( array($table))) > 0;

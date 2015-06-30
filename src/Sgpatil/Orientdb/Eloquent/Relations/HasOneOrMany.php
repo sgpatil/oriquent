@@ -264,32 +264,7 @@ abstract class HasOneOrMany extends IlluminateHasOneOrMany implements RelationIn
     public function addConstraints()
     {
         if (static::$constraints)
-        {
-            /**
-             * For has one relationships we need to actually query on the primary key
-             * of the parent model matching on the OUTGOING relationship by name.
-             *
-             * We are trying to achieve a Cypher that goes something like:
-             *
-             * MATCH (user:`User`), (user)-[:PHONE]->(phone:`Phone`)
-             * WHERE id(user) = 86234
-             * RETURN phone;
-             *
-             * (user:`User`) represents a matching statement where
-             * 'user' is the parent Node's placeholder and '`User`' is the parentLabel.
-             * All node placeholders must be lowercased letters and will be used
-             * throught the query to represent the actual Node.
-             *
-             * Resulting from:
-             * class User extends NeoEloquent {
-             *
-             *     public function phone()
-             *     {
-             *          return $this->hasOne('Phone', 'PHONE');
-             *     }
-             * }
-            */
-exit("is it here");
+        {            
             // Get the parent node's placeholder.
             $parentNode = $this->getParentNode();
             // Tell the query that we only need the related model returned.
