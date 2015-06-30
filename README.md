@@ -79,7 +79,7 @@ php artisan orient
 
 ## How to Use
 ```php
-To insert a record
+// To insert a record
 class User extends \Orientdb {
 
     protected $fillable = ['name', 'email'];
@@ -92,5 +92,22 @@ You can use this by extending Orientdb into model class.
 
 
 To fetch all records
-
+```php
 $users = User::all();
+foreach($users as $user){
+        echo $user->id;
+        echo $user->name;
+        echo $user->email;
+    }
+```
+To find a record
+```php
+$user = User::find(1);
+```
+To update a record
+```php
+$user = User::find(1);
+$user->name = "New Name";
+$user->save();
+```
+Want to learn more? [See the wiki.](https://github.com/sgpatil/orientdb-laravel-5/wiki)
