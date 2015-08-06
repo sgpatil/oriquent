@@ -150,6 +150,15 @@ abstract class Model extends IlluminateModel {
      */
     public function hasOne($related, $foreignKey = null, $otherKey = null, $relation = null)
     {
+        $foreignKey = $foreignKey ?: $this->getForeignKey();
+
+        $instance = new $related;
+
+        $otherKey = $otherKey ?: $this->getKeyName();
+
+        return new HasOne($instance->newQuery(), $this, $instance->getTable().'.'.$foreignKey, $otherKey, $relation);
+        
+        
         // If no relation name was given, we will use this debug backtrace to extract
         // the calling method's name and use that as the relationship name as most
         // of the time this will be what we desire to use for the relationships.

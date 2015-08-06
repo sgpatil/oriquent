@@ -793,4 +793,15 @@ class Builder extends IlluminateQueryBuilder {
         return $this->limit($value);
     }
 
+    
+    /**
+     * Insert a new record into the database.
+     *
+     * @param  array  $values
+     * @return bool
+     */
+    public function insertRelationship($parent, $related, $relationship, $bindings=[]) {
+        $cypher = $this->grammar->compileEdge($this, $parent, $related, $relationship, $bindings);
+        return $this->connection->insert($cypher, $bindings);
+    }
 }

@@ -738,4 +738,25 @@ class CypherGrammar extends Grammar {
 	{
 		return preg_replace('/and |or /', '', $value, 1);
 	}
+        
+        /**
+	 * Compile an Edge statement into SQL.
+	 *
+	 * @param  \Illuminate\Database\Query\Builder  $query
+	 * @param  array  $values
+	 * @return string
+	 */
+	public function compileEdge(Builder $query, $parent, $related, $relationship, $values = [])
+	{
+		// Essentially we will force every insert to be treated as a batch insert which
+		// simply makes creating the SQL easier for us since we can utilize the same
+		// basic routine regardless of an amount of records given to us to insert.
+            
+		$from = $this->columnize([$parent->id]);
+                
+                $to = $this->columnize([$related->id]);
+
+                return "create edge from $from to $to";;
+
+	}
 }

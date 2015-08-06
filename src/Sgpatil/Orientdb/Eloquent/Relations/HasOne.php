@@ -38,6 +38,7 @@ class HasOne extends HasOneOrMany {
     {
         if (static::$constraints)
         {
+            
             /**
              * For has one relationships we need to actually query on the primary key
              * of the parent model matching on the OUTGOING relationship by name.

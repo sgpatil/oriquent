@@ -2,7 +2,7 @@
 
 use DateTime;
 use Carbon\Carbon;
-use \Orientdb\Relationship;
+use Sgpatil\Orientphp\Relationship;
 use Illuminate\Database\Eloquent\Collection;
 use Sgpatil\Orientdb\Eloquent\Model;
 use Sgpatil\Orientdb\Eloquent\Builder;
@@ -117,6 +117,7 @@ abstract class Relation extends Delegate {
      */
     protected $direction;
 
+    protected static $constraints = true;
     /**
      * Create a new Relation instance.
      *
@@ -160,8 +161,8 @@ abstract class Relation extends Delegate {
 
             case 'out':
                 // Make them nodes
-                $this->start = $this->asNode($this->parent);
-                $this->end   = $this->asNode($this->related);
+                $this->start = $this->parent->id;
+                $this->end   = $this->related->id;
                 // Setup relationship
                 $this->relation = $this->makeRelationship($this->type, $this->parent, $this->related, $this->attributes);
             break;
@@ -203,8 +204,8 @@ abstract class Relation extends Delegate {
         {
             
             $parent = $this->asNode($this->parent);
-            
-           // $existing = $parent->getFirstRelationship((array) $this->type, $this->getRealDirection($this->direction));
+            $existing = $parent->getFirstRelationship((array) $this->type, $this->getRealDirection($this->direction));
+  
 
             if ( ! empty($existing))
             {
@@ -214,13 +215,14 @@ abstract class Relation extends Delegate {
 
         $this->setRelationProperties($this->toArray());
 
-        $saved = $this->relation->save();
+        $saved = $this->query->insertRelationship($this->parent, $this->related, $this->relation, $values=[]);
+
 
         if ($saved)
         {
             // Let's refresh the relation we alreay have set so that
             // we make sure that it is totally in sync with the saved one.
-            $this->setRelation($this->relation);
+           // $this->setRelation($this->relation);
 
             return true;
         }
@@ -303,7 +305,7 @@ abstract class Relation extends Delegate {
 
         // Replace the attributes with those brought from the given relation.
         $this->attributes = $relation->getProperties();
-        $this->setAttribute($this->primaryKey, $relation->getId());
+        //$this->setAttribute($this->primaryKey, $relation->getId());
 
         // Set the start and end nodes.
         $this->start = $relation->getStartNode();
