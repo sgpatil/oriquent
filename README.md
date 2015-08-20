@@ -9,7 +9,7 @@ Orientdb Graph Eloquent Driver for Laravel 5
  - [Installation](#installation)
  - [Configuration](#Database Configuration)
  - [Migration](#migration)
- - [Relationship](#relationship)
+ - [Relationships](#relationships)
 
 ## Installation
 
@@ -111,7 +111,7 @@ $user = User::find(1);
 $user->name = "New Name";
 $user->save();
 ```
-## Relationship
+## Relationships
 To create one-to-one relationship
 ```php
 $user =   User::create(['name'=>"Sumit", 'email' => "demo@email.com"]); // Create User node
