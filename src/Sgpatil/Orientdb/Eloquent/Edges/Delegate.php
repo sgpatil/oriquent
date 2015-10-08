@@ -68,10 +68,10 @@ abstract class Delegate {
     {
         return $this->client
             ->makeRelationship()
-            ->setType($this->type)
-            ->setStartNode($this->start)
-            ->setEndNode($this->end)
-            ->setProperties($this->attributes);
+            ->setType($type)
+            ->setStartNode($startModel)
+            ->setEndNode($endModel)
+            ->setProperties($properties);
     }
 
     /**

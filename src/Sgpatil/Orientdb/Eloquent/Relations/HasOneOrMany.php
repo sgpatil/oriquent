@@ -181,7 +181,6 @@ abstract class HasOneOrMany extends IlluminateHasOneOrMany implements RelationIn
     public function save(EloquentModel $model, array $properties = array()) {
         $model->setAttribute($this->getPlainForeignKey(), $this->getParentKey());
         $model->save() ? $model : false;
-        
         //create relationship
         $edge = $this->getEdge($model, $properties);
         $edge->save();
@@ -573,7 +572,7 @@ abstract class HasOneOrMany extends IlluminateHasOneOrMany implements RelationIn
      * @return string
      */
     public function getParentNode() {
-        return $this->query->getQuery()->modelAsNode($this->parent->getTable());
+        return $this->query->getQuery()->modelAsNode([$this->parent->getTable()]);
     }
 
     /**

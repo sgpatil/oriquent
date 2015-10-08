@@ -153,10 +153,11 @@ abstract class Relation extends Delegate {
         {
             case 'in':
                 // Make them nodes
-                $this->start = $this->asNode($this->related);
-                $this->end   = $this->asNode($this->parent);
+                $this->start = $this->related->id;
+                $this->end   = $this->parent->id;
+                //exit("here");
                 // Setup relationship
-                $this->relation = $this->makeRelationship($this->type, $this->relation, $this->parent, $this->attributes);
+                $this->relation = $this->makeRelationship($this->type, $this->start, $this->end, $this->attributes);
             break;
 
             case 'out':

@@ -21,34 +21,8 @@ class BelongsTo extends OneRelation {
     {
         if (static::$constraints)
         {
-            /**
-             * For belongs to relationships, which are essentially the inverse of has one
-             * or has many relationships, we need to actually query on the primary key
-             * of the parent model matching on the INCOMING relationship by name.
-             *
-             * We are trying to achieve a Cypher that goes something like:
-             *
-             * MATCH (phone:`Phone`), (phone)<-[:PHONE]-(owner:`User`)
-             * WHERE id(phone) = 1006
-             * RETURN owner;
-             *
-             * (phone:`Phone`) represents a matching statement where
-             * 'phone' is the parent Node's placeholder and '`Phone`' is the parentLabel.
-             * All node placeholders must be lowercased letters and will be used
-             * throught the query to represent the actual Node.
-             *
-             * Resulting from:
-             * class Phone extends NeoEloquent {
-             *
-             *     public function owner()
-             *     {
-             *          return $this->belongsTo('User', 'PHONE');
-             *     }
-             * }
-            */
-
             // Get the parent node's placeholder.
-            $parentNode = $this->query->getQuery()->modelAsNode($this->parent->getTable());
+            $parentNode = $this->query->getQuery()->modelAsNode([$this->parent->getTable()]);
             // Tell the query that we only need the related model returned.
             $this->query->select($this->relation);
             // Set the parent node's placeholder as the RETURN key.
@@ -105,7 +79,23 @@ class BelongsTo extends OneRelation {
 
         // Indicate a unique relation since this only involves one other model.
         $unique = true;
-        return new EdgeIn($this->query, $this->parent, $model, $this->foreignKey, $attributes, $unique);
+        return new EdgeIn($this->query, $model, $this->parent,  $this->foreignKey, $attributes, $unique);
+    }
+    
+    /**
+     * Attach a model instance to the parent model.
+     *
+     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @param  array $properties The relationship properites
+     * @return \Sgpatil\Orientdb\Eloquent\Edges\Edge[In, Out, etc.]
+     */
+    public function save(EloquentModel $model, array $properties = array()) {
+        //$model->setAttribute($this->getPlainForeignKey(), $this->getParentKey());
+        $model->save() ? $model : false;
+        //create relationship
+        $edge = $this->getEdge($model, $properties);
+        $edge->save();
+        return $edge;
     }
 
 }

@@ -60,43 +60,17 @@ abstract class OneRelation extends BelongsTo implements RelationInterface {
      * @param  \Illuminate\Database\Eloquent\Model  $model
      * @return \Sgpatil\Orientdb\Eloquent\Edges\Relation
      */
-    public function associate(Model $model, $attributes = array())
+    public function associate($model, $attributes = array())
     {
-        /**
-         * For associated models we will need to create a unique relationship
-         * between the parent and the related model. In Cypher we can use the
-         * MERGE clause to make sure that the relationship doesn't happen more than once.
-         *
-         * An example query would be like:
-         *
-         * HasOne:
-         * -------
-         *
-         * MATCH (user:`User`), (phone:`Phone`)
-         * WHERE id(user) = 10892 AND id(phone) = 98522
-         * MERGE (user)-[rel:PHONE]-(phone)
-         * RETURN rel;
-         *
-         * BelongsTo:
-         * ---------
-         *
-         * MATCH (account:`Account`), (user:`User`)
-         * WHERE id(account) = 10892 AND id(user) = 98522
-         * MERGE (account)<-[rel:ACCOUNT]-(user)
-         * RETURN rel;
-         */
+       $otherKey = ($model instanceof Model ? $model->getAttribute($this->otherKey) : $model);
 
-        // Set the relation on the model
-        $this->parent->setRelation($this->relation, $model);
+        $this->parent->setAttribute($this->foreignKey, $otherKey);
 
-        /**
-         * Due to the fact that relationships in Graph are entities themselves
-         * we will need to treat them as such and in this case what we're looking for is
-         * a relationship with an INCOMING direction towards the parent node, in other words
-         * it is a relationship with an edge incoming towards the $parent model and we call it
-         * an "Edge" relationship.
-         */
-        return $this->getEdge($model, $attributes);
+        if ($model instanceof Model) {
+            $this->parent->setRelation($this->relation, $model);
+        }
+
+        return $this->parent;
     }
 
     /**
