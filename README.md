@@ -9,6 +9,7 @@ Orientdb Graph Eloquent Driver for Laravel 5
  - [Installation](#installation)
  - [Configuration](#Database Configuration)
  - [Migration](#migration)
+ - [Relationships](#relationships)
 
 ## Installation
 
@@ -110,4 +111,14 @@ $user = User::find(1);
 $user->name = "New Name";
 $user->save();
 ```
+## Relationships
+To create one-to-one relationship
+```php
+$user =   User::create(['name'=>"Sumit", 'email' => "demo@email.com"]); // Create User node
+$phone = new Phone(['code' => 963, 'number' => '98555533']); // Create Phone node
+$relation = $user->has_phone()->save($phone); // Creating relationship
+```
+Unable to find has_phone() method ? [See full example.](https://github.com/sgpatil/orientdb-laravel-5/wiki/Relationships)
+
+
 Want to learn more? [See the wiki.](https://github.com/sgpatil/orientdb-laravel-5/wiki)

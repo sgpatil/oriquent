@@ -1,4 +1,5 @@
-<?php namespace Sgpatil\Orientdb;
+<?php 
+namespace Sgpatil\Orientdb;
 
 use Sgpatil\Orientphp\Exception as OrientException;
 
