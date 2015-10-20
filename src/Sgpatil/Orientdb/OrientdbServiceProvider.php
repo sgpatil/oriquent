@@ -1,4 +1,6 @@
-<?php namespace Sgpatil\Orientdb;
+<?php
+
+namespace Sgpatil\Orientdb;
 
 use Illuminate\Support\ServiceProvider;
 use Sgpatil\Orientdb\Connection;
@@ -6,23 +8,21 @@ use Sgpatil\Orientdb\Migrations\DatabaseMigrationRepository;
 
 class OrientdbServiceProvider extends ServiceProvider {
 
-	/**
-	 * Bootstrap the application services.
-	 *
-	 * @return void
-	 */
-	public function boot()
-	{
-		//
-	}
+    /**
+     * Bootstrap the application services.
+     *
+     * @return void
+     */
+    public function boot() {
+        //
+    }
 
-	/**
-	 * Register the application services.
-	 *
-	 * @return void
-	 */
-	public function register()
-	{
+    /**
+     * Register the application services.
+     *
+     * @return void
+     */
+    public function register() {
 
         $this->app->register('Sgpatil\Orientdb\MigrationServiceProvider');
 
@@ -34,15 +34,12 @@ class OrientdbServiceProvider extends ServiceProvider {
             $loader = \Illuminate\Foundation\AliasLoader::getInstance();
             $loader->alias('Orientdb', 'Sgpatil\Orientdb\Eloquent\Model');
         });
-        
 
         $this->app->bind('ConnectionResolverInterface', function($app) {
-            $conn = new Connection(['host' => 'localhost',
-                'port' => 2480,
-                'username' => 'root',
-                'database' => 'graphdb2',
-                'password' => 'root']);
-            return new DatabaseManager($app, $conn );
+            $databases = $app['config']['database.connections'];
+            $defaultConnection = $app['config']['database.default'];
+            $conn = new Connection($databases[$defaultConnection]);
+            return new DatabaseManager($app, $conn);
         });
 
         $this->app->bind('MigrationRepositoryInterface', function($app) {
@@ -50,15 +47,11 @@ class OrientdbServiceProvider extends ServiceProvider {
             $table = $app['config']['database.migrations'];
             return new DatabaseMigrationRepository($resolver, $table);
         });
-        
-        
 
-        $this->app->bind('orientdb.database', function() {
-            return new Connection(['host' => 'localhost',
-                'port' => 2480,
-                'username' => 'root',
-                'database' => 'graphdb2',
-                'password' => 'root']);
+        $this->app->bind('orientdb.database', function($app) {
+            $databases = $app['config']['database.connections'];
+            $defaultConnection = $app['config']['database.default'];
+            return new Connection($databases[$defaultConnection]);
         });
 
         $this->app->bind('CreateOrientdbMigration', function($app) {
@@ -69,7 +62,6 @@ class OrientdbServiceProvider extends ServiceProvider {
         $CreateOrientdbMigration = $this->app->make('CreateOrientdbMigration');
 
         $this->commands('CreateOrientdbMigration');
-		
-	}
+    }
 
 }
