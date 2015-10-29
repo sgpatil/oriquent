@@ -112,9 +112,9 @@ class DatabaseMigrationRepository implements MigrationRepositoryInterface {
 	 */
 	public function createRepository()
 	{
-		$schema = $this->getConnection()->getClient();
+		$client = $this->getConnection()->getClient();
 
-		$schema->makeClass($this->table, function($table)
+		$client->makeClass($this->table, function($table)
 		{
 			// The migrations table is responsible for keeping track of which of the
 			// migrations have actually run for the application. We'll create the

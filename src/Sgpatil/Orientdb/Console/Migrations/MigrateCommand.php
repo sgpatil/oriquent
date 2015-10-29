@@ -13,7 +13,7 @@ class MigrateCommand extends BaseCommand {
 	 *
 	 * @var string
 	 */
-	protected $name = 'orient';
+	protected $name = 'orient:migrate';
 
 	/**
 	 * The console command description.
