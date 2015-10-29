@@ -630,6 +630,13 @@ class Builder extends IlluminateQueryBuilder {
         $this->columns = $previousColumns;
 
         if ($results->valid()) {
+            $data = $results->getData();
+            if (isset($data)) {
+            $result = array_change_key_case((array) $data[0]);
+
+            return $result['aggregate'];
+        }
+        
             return $results->current()[0];
         }
     }

@@ -21,7 +21,7 @@ class RollbackCommand extends Command {
 	 *
 	 * @var string
 	 */
-	protected $description = 'Rollback the last database migration';
+	protected $description = 'Rollback the last Orientdb database migration';
 
 	/**
 	 * The migrator instance.

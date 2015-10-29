@@ -162,6 +162,7 @@ class Migrator {
 		// migration operation. We'll then reverse those migrations and run each
 		// of them "down" to reverse the last migration "operation" which ran.
 		$migrations = $this->repository->getLast();
+                $migrations = $migrations->getData();
 
 		if (count($migrations) == 0)
 		{
@@ -177,7 +178,7 @@ class Migrator {
 		{
 			$this->runDown((object) $migration, $pretend);
 		}
-
+                
 		return count($migrations);
 	}
 

@@ -240,11 +240,13 @@ class Connection extends IlluminateConnection {
      * @return
      */
     public function statement($query, $bindings = array(), $rawResults = false) {
+
         return $this->run($query, $bindings, function(self $me, $query, array $bindings) use($rawResults) {
                     if ($me->pretending())
                         return true;
-                    $statement = $me->getCypherQuery($query, $bindings);
-
+                    //$statement = $me->getCypherQuery($query, $bindings);
+                    $statement = $me->getBatchQuery($query, $bindings);
+                   
                     $result = $statement->getResultSet();
 
                     return ($rawResults === true) ? $result : $result instanceof ResultSet;
