@@ -75,7 +75,7 @@ php artisan orient:make create_users_table --create=users
 ```
 To run migration 
 ```php
-php artisan orient
+php artisan orient:migrate
 ```
 
 ## How to Use
