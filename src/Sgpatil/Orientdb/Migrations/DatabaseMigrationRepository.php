@@ -49,13 +49,13 @@ class DatabaseMigrationRepository implements MigrationRepositoryInterface {
 	}
 
 	/**
-	 * Get the last migration batch.
+	 * Get the last migration version.
 	 *
 	 * @return array
 	 */
 	public function getLast()
 	{
-		$query = $this->table()->where('batch', $this->getLastBatchNumber());
+		$query = $this->table()->where('version', $this->getLastBatchNumber());
 
 		return $query->orderBy('migration', 'desc')->get();
 	}
@@ -64,12 +64,12 @@ class DatabaseMigrationRepository implements MigrationRepositoryInterface {
 	 * Log that a migration was run.
 	 *
 	 * @param  string  $file
-	 * @param  int     $batch
+	 * @param  int     $version
 	 * @return void
 	 */
-	public function log($file, $batch)
+	public function log($file, $version)
 	{
-		$record = array('migration' => $file, 'batch' => $batch);
+		$record = array('migration' => $file, 'version' => $version);
 
 		$this->table()->insert($record);
 	}
@@ -86,7 +86,7 @@ class DatabaseMigrationRepository implements MigrationRepositoryInterface {
 	}
 
 	/**
-	 * Get the next migration batch number.
+	 * Get the next migration version number.
 	 *
 	 * @return int
 	 */
@@ -96,13 +96,13 @@ class DatabaseMigrationRepository implements MigrationRepositoryInterface {
 	}
 
 	/**
-	 * Get the last migration batch number.
+	 * Get the last migration version number.
 	 *
 	 * @return int
 	 */
 	public function getLastBatchNumber()
 	{
-		return $this->table()->max('batch');
+		return $this->table()->max('version');
 	}
 
 	/**
@@ -118,10 +118,10 @@ class DatabaseMigrationRepository implements MigrationRepositoryInterface {
 		{
 			// The migrations table is responsible for keeping track of which of the
 			// migrations have actually run for the application. We'll create the
-			// table to hold the migration file's path as well as the batch ID.
+			// table to hold the migration file's path as well as the version ID.
 			$table->string('migration');
 
-			$table->integer('batch');
+			$table->integer('version');
 		})->save();
 	}
 
