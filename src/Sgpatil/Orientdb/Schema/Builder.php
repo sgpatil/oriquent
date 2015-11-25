@@ -125,6 +125,10 @@ class Builder {
      */
     public function drop($table) {
         $blueprint = $this->createBlueprint($table);
+        // Delete Vertex
+        $blueprint->delete();
+        $this->build($blueprint);
+        // Drop Class
         $blueprint->drop();
         $this->build($blueprint);
     }

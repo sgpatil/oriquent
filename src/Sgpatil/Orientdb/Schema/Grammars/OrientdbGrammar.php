@@ -54,6 +54,21 @@ class OrientdbGrammar extends Grammar {
         //$sql = 'create class '.$this->wrapTable($blueprint)." ($columns)";
         return  $sql = 'create class '.$this->wrapTable($blueprint)." extends V";
     }
+    
+    /**
+     * Compile a create table command.
+     *
+     * @param  \Illuminate\Database\Schema\Blueprint  $blueprint
+     * @param  \Illuminate\Support\Fluent  $command
+     * @param  \Illuminate\Database\Connection  $connection
+     * @return string
+     */
+    public function compileDelete(Blueprint $blueprint, Fluent $command, Connection $connection) {
+       
+        // $columns = implode(', ', $this->getColumns($blueprint));
+        //$sql = 'create class '.$this->wrapTable($blueprint)." ($columns)";
+        return  $sql = 'DELETE VERTEX '.$this->wrapTable($blueprint);
+    }
 
     /**
      * Append the character set specifications to a command.

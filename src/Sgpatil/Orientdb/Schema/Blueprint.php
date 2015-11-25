@@ -165,6 +165,15 @@ class Blueprint {
     public function drop() {
         return $this->addCommand('drop');
     }
+    
+    /**
+     * Indicate that the vertex should be deleted.
+     *
+     * @return \Illuminate\Support\Fluent
+     */
+    public function delete() {
+        return $this->addCommand('delete');
+    }
 
     /**
      * Indicate that the table should be dropped if it exists.
