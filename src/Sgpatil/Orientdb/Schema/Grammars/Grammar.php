@@ -114,7 +114,15 @@ abstract class Grammar extends BaseGrammar {
 	protected function getColumns(Blueprint $blueprint)
 	{
 		$columns = array();
-
+//foreach ($blueprint->getColumns() as $key => $column)
+//		{
+//			// Each of the column types have their own compiler functions which are tasked
+//			// with turning the column definition into its SQL format for this platform
+//			// used by the connection. The column's modifiers are compiled and added.
+//			//$sql = $this->wrap($key);
+//
+//			$columns[] = $key;
+//		}
 		foreach ($blueprint->getColumns() as $column)
 		{
 			// Each of the column types have their own compiler functions which are tasked

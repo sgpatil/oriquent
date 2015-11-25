@@ -49,9 +49,10 @@ class OrientdbGrammar extends Grammar {
      * @return string
      */
     public function compileCreate(Blueprint $blueprint, Fluent $command, Connection $connection) {
-        $class = $connection->getClient()->makeClass($blueprint->getTable());
-        $class->setProperty($blueprint->getColumns());
-        $class->save();
+       
+        // $columns = implode(', ', $this->getColumns($blueprint));
+        //$sql = 'create class '.$this->wrapTable($blueprint)." ($columns)";
+        return  $sql = 'create class '.$this->wrapTable($blueprint)." extends V";
     }
 
     /**
