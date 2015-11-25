@@ -31,7 +31,7 @@ class MorphedByOne extends OneRelation {
              * throught the query to represent the actual Node.
              *
              * Resulting from:
-             * class Phone extends NeoEloquent {
+             * class Phone extends Oruentdb {
              *
              *     public function owner()
              *     {

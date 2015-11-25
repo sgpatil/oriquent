@@ -74,7 +74,7 @@ class HyperMorph extends BelongsToMany {
              * throught the query to represent the actual Node.
              *
              * Resulting from:
-             * class User extends NeoEloquent {
+             * class User extends Oruentdb {
              *
              *     public function phone()
              *     {

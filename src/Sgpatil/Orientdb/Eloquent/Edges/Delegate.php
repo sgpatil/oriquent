@@ -161,7 +161,7 @@ RETURN "OUT";
     }
 
     /**
-     * Get the NeoEloquent connection for this relation.
+     * Get the Orientdb connection for this relation.
      *
      * @return \Sgpatil\Orientdb\Connection
      */
