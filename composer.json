@@ -1,12 +1,12 @@
 {
 
-    "name": "sgpatil/orientdb-laravel-5",
+    "name": "pin-cnx/orientdb-laravel-5",
     "description": "Laravel Orientdb Driver",
     "license": "MIT",
     "authors": [
         {
-            "name": "Sumit Patil",
-            "email": "sgpatil.2803@gmail.com"
+            "name": "Pitipong Guntawong",
+            "email": "pppstudio.gm@gmail.com"
         }
     ],
     "require": {
