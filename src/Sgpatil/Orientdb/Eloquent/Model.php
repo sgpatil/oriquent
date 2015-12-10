@@ -14,6 +14,14 @@ use Sgpatil\Orientdb\Eloquent\Builder as EloquentBuilder;
 
 abstract class Model extends IlluminateModel {
 
+
+    /**
+     * The primary key for the model.
+     *
+     * @var string
+     */
+    protected $primaryKey = '@rid';
+
     /**
      * The node label
      *
