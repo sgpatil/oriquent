@@ -23,6 +23,18 @@ abstract class Model extends IlluminateModel {
     protected $primaryKey = '@rid';
 
     /**
+     * Get an attribute from the model.
+     *
+     * @param  string  $key
+     * @return mixed
+     */
+    public function getAttribute($key)
+    {
+        if($key=='id') $key='@rid';
+        return parent::getAttribute($key);
+    }
+
+    /**
      * The node label
      *
      * @var string|array
@@ -487,7 +499,7 @@ abstract class Model extends IlluminateModel {
 
         return $dirty;
     }
-    
+
      /**
      * Save the model to the database.
      *
@@ -496,7 +508,7 @@ abstract class Model extends IlluminateModel {
      */
     public function save(array $options = [])
     {
-        
+
         $query = $this->newQueryWithoutScopes();
 
         // If the "saving" event returns false we'll bail out of the save and return
@@ -510,7 +522,7 @@ abstract class Model extends IlluminateModel {
         // that is already in this database using the current IDs in this "where"
         // clause to only update this model. Otherwise, we'll just insert them.
         if ($this->exists) {
-          
+
             $saved = $this->performUpdate($query, $options);
         }
 
