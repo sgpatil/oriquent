@@ -40,7 +40,7 @@ class Builder extends IlluminateBuilder {
 		    return $this->findMany(array_map(function($id){ return (int) $id; }, $id), $properties);
 		} else {
 
-            $id = (int) $id;
+            $id = $id;
         }
 
 		$this->query->where($this->model->getKeyName(), '=', $id);
