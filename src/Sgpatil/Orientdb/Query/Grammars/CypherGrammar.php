@@ -746,17 +746,21 @@ class CypherGrammar extends Grammar {
 	 * @param  array  $values
 	 * @return string
 	 */
-	public function compileEdge(Builder $query, $parent, $related, $relationship, $values = [])
+	public function compileEdge(Builder $query, $parent, $related, $relationship='E', $values = [])
 	{
 		// Essentially we will force every insert to be treated as a batch insert which
 		// simply makes creating the SQL easier for us since we can utilize the same
 		// basic routine regardless of an amount of records given to us to insert.
-            
-		$from = $this->columnize([$parent->id]);
-                
-                $to = $this->columnize([$related->id]);
 
-                return "create edge from $from to $to";;
+        $from = $this->columnize([$parent->id]);
+        $to = $this->columnize([$related->id]);
+
+        // Add content if there are the $values present
+        $property_query = NULL;
+        if ($values != NULL) {
+            $property_query = "CONTENT " . json_encode($values);
+        }
+        return "create edge $relationship from $from to $to " . $property_query;
 
 	}
 }
