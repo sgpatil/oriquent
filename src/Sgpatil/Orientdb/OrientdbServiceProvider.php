@@ -38,9 +38,6 @@ class OrientdbServiceProvider extends ServiceProvider {
         $this->app->bind('ConnectionResolverInterface', function($app) {
             $databases = $app['config']['database.connections'];
             $defaultConnection = $app['config']['database.default_nosql'];
-            echo "--DEBUG-- databases:".var_export($databases,true)."\n";
-            echo "--DEBUG-- config.database.default_nosql:".var_export($app['config']['database.default_nosql'],true)."\n";
-            echo "--DEBUG-- defaultConnection:".var_export($defaultConnection,true)."\n";
             $conn = new Connection($databases[$defaultConnection]);
             return new DatabaseManager($app, $conn);
         });
@@ -62,10 +59,10 @@ class OrientdbServiceProvider extends ServiceProvider {
             return new CreateOrientdbMigration($database);
         });
 
-        /* TODO: this need to be correct be for make it live because it didn't support the orient db as a secondary connection
+
         $CreateOrientdbMigration = $this->app->make('CreateOrientdbMigration');
 
-        $this->commands('CreateOrientdbMigration');*/
+        $this->commands('CreateOrientdbMigration');
     }
 
 }
