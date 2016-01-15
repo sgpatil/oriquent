@@ -59,9 +59,10 @@ class OrientdbServiceProvider extends ServiceProvider {
             return new CreateOrientdbMigration($database);
         });
 
+        /* TODO: this need to be correct be for make it live because it didn't support the orient db as a secondary connection
         $CreateOrientdbMigration = $this->app->make('CreateOrientdbMigration');
 
-        $this->commands('CreateOrientdbMigration');
+        $this->commands('CreateOrientdbMigration');*/
     }
 
 }
