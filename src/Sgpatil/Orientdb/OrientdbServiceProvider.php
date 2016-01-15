@@ -37,7 +37,7 @@ class OrientdbServiceProvider extends ServiceProvider {
 
         $this->app->bind('ConnectionResolverInterface', function($app) {
             $databases = $app['config']['database.connections'];
-            $defaultConnection = $app['config']['database.default'];
+            $defaultConnection = $app['config']['database.default_nosql'];
             $conn = new Connection($databases[$defaultConnection]);
             return new DatabaseManager($app, $conn);
         });
@@ -50,7 +50,7 @@ class OrientdbServiceProvider extends ServiceProvider {
 
         $this->app->bind('orientdb.database', function($app) {
             $databases = $app['config']['database.connections'];
-            $defaultConnection = $app['config']['database.default'];
+            $defaultConnection = $app['config']['database.default_nosql'];
             return new Connection($databases[$defaultConnection]);
         });
 
