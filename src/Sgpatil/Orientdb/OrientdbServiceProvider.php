@@ -38,6 +38,9 @@ class OrientdbServiceProvider extends ServiceProvider {
         $this->app->bind('ConnectionResolverInterface', function($app) {
             $databases = $app['config']['database.connections'];
             $defaultConnection = $app['config']['database.default_nosql'];
+            echo "--DEBUG-- databases:".$databases."\n";
+            echo "--DEBUG-- config.database.default_nosql:".$app['config']['database.default_nosql']."\n";
+            echo "--DEBUG-- defaultConnection:".var_export($defaultConnection,true)."\n";
             $conn = new Connection($databases[$defaultConnection]);
             return new DatabaseManager($app, $conn);
         });
