@@ -611,23 +611,27 @@ class CypherGrammar extends Grammar {
 		// We need to build a list of parameter place-holders of values that are bound
 		// to the query. Each insert should have the exact same amount of parameter
 		// bindings so we can just go off the first list of values in this array.
-		$values = reset($values);
 		$parse_value = [];
-		foreach($values as $value){
-			if(is_bool($value)){
-				$parse_value[] = $value?'true':'false';
-			}else{
-				$parse_value[] = "'". $value."'";
+		foreach($values as $value) {
+			//$value = reset($value);
+			$it_value = [];
+			foreach ($value as $val) {
+				if (is_bool($val)) {
+					$it_value[] = $val ? 'true' : 'false';
+				} else {
+					$it_value[] = "'" . $val . "'";
+				}
 			}
+			$parse_value[] = implode(',', $it_value);
 		}
-		$parameters =  implode(',', $parse_value);
+		$parameters =  "(".implode('), (', $parse_value).")";
 
 
 		//$parameters = $this->parameterize(reset($values));
 
-		$value = array_fill(0, count($values), "($parameters)");
+		//$value = array_fill(0, count($values), "($parameters)");
 
-		$parameters = implode(', ', $value);
+		//$parameters = implode(', ', $value);
 
 		return "insert into $table ($columns) values $parameters";
 	}
