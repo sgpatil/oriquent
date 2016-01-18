@@ -43,6 +43,7 @@ make `orientdb` your default connection:
 
 ```php
 'default' => 'orientdb',
+'default_nosql' => 'orientdb', //optional if you are using orientdb as a secondary connection
 ```
 
 Add the connection defaults:
