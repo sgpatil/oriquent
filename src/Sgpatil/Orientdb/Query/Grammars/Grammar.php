@@ -26,7 +26,12 @@ class Grammar extends IlluminateGrammar {
 
         // When coming from a WHERE statement we'll have to pluck out the column
         // from the collected attributes.
-        if(is_array($value) && isset($value['binding']))
+
+        if (is_bool($value)) {
+            // For the boolean column this need to be un-quote unless orientdb will reject
+            return $value ? 'true' : 'false';
+        }
+        elseif(is_array($value) && isset($value['binding']))
         {
             $value = $value['binding'];
         }
