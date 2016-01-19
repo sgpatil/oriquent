@@ -43,6 +43,8 @@ class Grammar extends IlluminateGrammar {
 
         if (strpos($property, '.') !== false) $property = explode('.', $property)[1];
 
+        $property = str_replace(array('\\', "\0", "\n", "\r", "'", '"', "\x1a"), array('\\\\', '\\0', '\\n', '\\r', "\\'", '\\"', '\\Z'), $property);
+
 		return "'" . $property . "'";
 	}
 
