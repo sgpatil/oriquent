@@ -6,10 +6,15 @@ Orientdb Graph Eloquent Driver for Laravel 5
 
 ## Quick Reference
 
+ - [Requirements](#requirements)
  - [Installation](#installation)
  - [Configuration](#Database Configuration)
  - [Migration](#migration)
  - [Relationships](#relationships)
+
+## Requirements
+   * Laravel 5.1 or above
+   * Orientdb Server 2.1 or above
 
 ## Installation
 
@@ -38,6 +43,7 @@ make `orientdb` your default connection:
 
 ```php
 'default' => 'orientdb',
+'default_nosql' => 'orientdb', //optional if you are using orientdb as a secondary connection
 ```
 
 Add the connection defaults:
