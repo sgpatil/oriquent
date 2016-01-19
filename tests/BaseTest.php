@@ -28,7 +28,9 @@ class BaseTest extends \PHPUnit_Framework_TestCase {
         $connection = is_null($config) ? $this->dbConfig['connections']['default'] :
                 $this->dbConfig['connections'][$config];
 
-        return new Connection($connection);
+        $client =  new Connection($connection); // Create Connection object
+        $client->getClient()->getServerInfo(); // Check If Server is connected or not
+        return $client;
     }
 
     public function testConnection()
