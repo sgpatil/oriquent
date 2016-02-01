@@ -9,9 +9,7 @@
             "email": "sgpatil.2803@gmail.com"
         }
     ],
-    "require": {
-	"illuminate/support": "5.1.*"
-    },
+    
 	"require-dev": {
         "phpunit/phpunit": "4.2.*",
         "mockery/mockery": "0.9.*"
@@ -23,6 +21,5 @@
 		"psr-0": {
 		"Sgpatil\\Orientdb\\": "src/"
 		}
-    },
-    "minimum-stability": "stable"
+    }
 }
