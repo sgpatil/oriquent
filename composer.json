@@ -11,7 +11,6 @@
     ],
     "require": {
 	"illuminate/support": "5.1.*",
-       	"illuminate/database": "5.1.*",
    	"sgpatil/orientdb-php": "0.*@dev"
     },
 	"require-dev": {
