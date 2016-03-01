@@ -170,13 +170,14 @@ abstract class Model extends IlluminateModel {
      */
     public function hasOne($related, $foreignKey = null, $otherKey = null, $relation = null)
     {
-        $foreignKey = $foreignKey ?: $this->getForeignKey();
+        // We will use Relationship as a class
+        $foreignKey = new $foreignKey;
 
         $instance = new $related;
 
         $otherKey = $otherKey ?: $this->getKeyName();
 
-        return new HasOne($instance->newQuery(), $this, $instance->getTable().'.'.$foreignKey, $otherKey, $relation);
+        return new HasOne($instance->newQuery(), $this, $foreignKey, $otherKey, $relation);
     }
 
     /**
