@@ -50,6 +50,10 @@ class Grammar extends IlluminateGrammar {
 
         $property = str_replace(array('\\', "\0", "\n", "\r", "'", '"', "\x1a"), array('\\\\', '\\0', '\\n', '\\r', "\\'", '\\"', '\\Z'), $property);
 
+        if(preg_match('~#(-)?[0-9]+:[0-9]+~', $property)) {//is (graph) id, don't wrap it or error would be thrown
+            return $property;
+        }
+
 		return "'" . $property . "'";
 	}
 
