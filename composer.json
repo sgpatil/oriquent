@@ -24,5 +24,6 @@
     	"psr-0": {
 		"Sgpatil\\Orientdb\\": "src/"
 	}
-    }
+    },
+    "minimum-stability": "stable"
 }
