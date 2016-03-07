@@ -9,8 +9,6 @@
         }
     ],
     "require": {
-		"illuminate/support": "5.*@dev",
-        	"illuminate/database": "5.*@dev",
    	    	"sgpatil/orientdb-php": "0.*"
     },
     "require-dev": {
