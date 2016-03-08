@@ -1,8 +1,25 @@
 
-# Orientdb Driver for Laravel 5
+# Orientdb Driver for Laravel 5.1
 
 
-Orientdb Graph Eloquent Driver for Laravel 5
+Oriquent is <b>Ori</b>entdb  Elo<b>quent</b> Driver for Laravel 5
+
+## Version Naming
+   The version tagging convention which we are following is <b>vX.Y.x.y</b> where
+   
+       X => Laravel Major Release
+       Y => Laravel Minor Release
+       x => Oriquent Major Release
+       y => Oriquent Minor Release
+   
+   
+   So to install oriquent on Laravel 5.2 you will need to install v5.2.\*.\*
+   
+   and to install oriquent on Laravel 5.1 you will need to install v5.1.\*.\*
+   
+   > Note : Branch `dev-master` will always point to latest release.
+   
+   You can check complete installation guide in [Installation](#installation) Section.
 
 ## Quick Reference
 
@@ -13,7 +30,7 @@ Orientdb Graph Eloquent Driver for Laravel 5
  - [Relationships](#relationships)
 
 ## Requirements
-   * Laravel 5.1 or above
+   * Laravel 5.2
    * Orientdb Server 2.1 or above
 
 ## Installation
@@ -23,7 +40,7 @@ Add the package to your `composer.json` and run `composer update`.
 ```json
 {
     "require": {
-        "sgpatil/orientdb-laravel-5": "dev-master"
+        "sgpatil/oriquent": "5.1.*"
     }
 }
 ```
