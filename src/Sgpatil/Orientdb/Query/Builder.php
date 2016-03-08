@@ -811,4 +811,24 @@ class Builder extends IlluminateQueryBuilder {
         $cypher = $this->grammar->compileEdge($this, $parent, $related, $relationship, $bindings);
         return $this->connection->insert($cypher, $bindings);
     }
+    
+    /**
+     * Get the columns that should be used in a list array.
+     *
+     * @param  string  $column
+     * @param  string  $key
+     * @return array
+     */
+    protected function getListSelect($column, $key) {
+        $select = is_null($key) ? [$column] : [$column, $key];
+
+        // If the selected column contains a "dot", we will remove it so that the list
+        // operation can run normally. Specifying the table is not needed, since we
+        // really want the names of the columns as it is in this resulting array.
+        return array_map(function ($column) {
+            $dot = strpos($column, '.');
+
+            return $dot === false ? $column : substr($column, $dot + 1);
+        }, $select);
+    }
 }
