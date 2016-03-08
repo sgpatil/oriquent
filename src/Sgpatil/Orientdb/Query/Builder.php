@@ -680,7 +680,7 @@ class Builder extends IlluminateQueryBuilder {
 
     /**
      * Tranfrom a model's name into a placeholder
-     * for fetched properties. i.e.:
+     * for plucked properties. i.e.:
      *
      * MATCH (user:`User`)... "user" is what this method returns
      * out of User (and other labels).
@@ -757,13 +757,13 @@ class Builder extends IlluminateQueryBuilder {
         $results = new Collection($res->getData());
 
 
-        $values = $results->fetch($columns[0])->all();
+        $values = $results->pluck($columns[0])->all();
 
         // If a key was specified and we have results, we will go ahead and combine
         // the values with the keys of all of the records so that the values can
         // be accessed by the key of the rows instead of simply being numeric.
         if (!is_null($key) && count($results) > 0) {
-            $keys = $results->fetch($key)->all();
+            $keys = $results->pluck($key)->all();
 
             return array_combine($keys, $values);
         }
