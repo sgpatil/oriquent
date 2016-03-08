@@ -26,7 +26,12 @@ class Grammar extends IlluminateGrammar {
 
         // When coming from a WHERE statement we'll have to pluck out the column
         // from the collected attributes.
-        if(is_array($value) && isset($value['binding']))
+
+        if (is_bool($value)) {
+            // For the boolean column this need to be un-quote unless orientdb will reject
+            return $value ? 'true' : 'false';
+        }
+        elseif(is_array($value) && isset($value['binding']))
         {
             $value = $value['binding'];
         }
@@ -42,6 +47,12 @@ class Grammar extends IlluminateGrammar {
         $property = $this->getIdReplacement($value);
 
         if (strpos($property, '.') !== false) $property = explode('.', $property)[1];
+
+        $property = str_replace(array('\\', "\0", "\n", "\r", "'", '"', "\x1a"), array('\\\\', '\\0', '\\n', '\\r', "\\'", '\\"', '\\Z'), $property);
+
+        if(preg_match('~#(-)?[0-9]+:[0-9]+~', $property)) {//is (graph) id, don't wrap it or error would be thrown
+            return $property;
+        }
 
 		return "'" . $property . "'";
 	}

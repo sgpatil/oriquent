@@ -602,14 +602,7 @@ class CypherGrammar extends Grammar
         foreach ($values as $value) {
             $col_values = [];
             foreach ($value as $val) {
-                if (is_bool($val)) {
-                    // For the boolean column this need to be un-quote unless orientdb will reject
-                    $col_values[] = $val ? 'true' : 'false';
-                } else {
-                    // Escape variable for security
-                    $val = str_replace(array('\\', "\0", "\n", "\r", "'", '"', "\x1a"), array('\\\\', '\\0', '\\n', '\\r', "\\'", '\\"', '\\Z'), $val);
-                    $col_values[] = "'" . $val . "'";
-                }
+                $col_values[] = $this->parameter($val);
             }
             $rows[] = implode(',', $col_values);
         }
