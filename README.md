@@ -35,6 +35,7 @@ Oriquent is <b>Ori</b>entdb  Elo<b>quent</b> Driver for Laravel 5
 
 ## Installation
 STEP 1 :
+
 Add the package to your `composer.json` and run `composer update`.
 
 ```json
@@ -46,7 +47,9 @@ Add the package to your `composer.json` and run `composer update`.
 ```
 
 OR
+
 Run below command in terminal
+
 
 ```sh
 $ composer require sgpatil/oriquent
