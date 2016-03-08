@@ -3,16 +3,11 @@
 namespace Sgpatil\Orientdb\Query;
 
 use Closure;
-use Doctrine\OrientDB\Graph\Graph;
-use Doctrine\OrientDB\Graph\Vertex;
-use Doctrine\OrientDB\Query\Query;
 use Sgpatil\Orientdb\Connection;
 use Illuminadte\Database\Query\Expression;
 use Illuminate\Database\Eloquent\Collection;
 use Sgpatil\Orientdb\Query\Grammars\Grammar;
 use Illuminate\Database\Query\Builder as IlluminateQueryBuilder;
-use Doctrine\OrientDB\Binding\HttpBinding as Binding;
-use Doctrine\OrientDB\Binding\BindingParameters as BindingParameters;
 
 class Builder extends IlluminateQueryBuilder {
 
@@ -106,12 +101,12 @@ class Builder extends IlluminateQueryBuilder {
      * @param  string  $sequence
      * @return int
      */
-    public function insertGetId(array $values, $sequence = null) {     
+    public function insertGetId(array $values, $sequence = null) {
         $sql = $this->grammar->compileInsertGetId($this, $values, $sequence);
         $values = $this->cleanBindings($values);
         $res = $this->connection->insert($sql);
         $res = $res->getData();
-        if(isset($res[0])){
+        if (isset($res[0])) {
             return $res[0]['@rid'];
         }
         return false;
@@ -188,15 +183,15 @@ class Builder extends IlluminateQueryBuilder {
      * @throws \InvalidArgumentException
      */
     public function where($column, $operator = null, $value = null, $boolean = 'and') {
-         // If the column is an array, we will assume it is an array of key-value pairs
+        // If the column is an array, we will assume it is an array of key-value pairs
         // and can add them each as a where clause. We will maintain the boolean we
         // received when the method was called and pass it into the nested where.
         if (is_array($column)) {
             return $this->whereNested(function ($query) use ($column) {
-                foreach ($column as $key => $value) {
-                    $query->where($key, '=', $value);
-                }
-            }, $boolean);
+                        foreach ($column as $key => $value) {
+                            $query->where($key, '=', $value);
+                        }
+                    }, $boolean);
         }
 
         // Here we will make some assumptions about the operator. If only 2 values are
@@ -632,11 +627,11 @@ class Builder extends IlluminateQueryBuilder {
         if ($results->valid()) {
             $data = $results->getData();
             if (isset($data)) {
-            $result = array_change_key_case((array) $data[0]);
+                $result = array_change_key_case((array) $data[0]);
 
-            return $result['aggregate'];
-        }
-        
+                return $result['aggregate'];
+            }
+
             return $results->current()[0];
         }
     }
@@ -685,7 +680,7 @@ class Builder extends IlluminateQueryBuilder {
 
     /**
      * Tranfrom a model's name into a placeholder
-     * for fetched properties. i.e.:
+     * for plucked properties. i.e.:
      *
      * MATCH (user:`User`)... "user" is what this method returns
      * out of User (and other labels).
@@ -762,13 +757,13 @@ class Builder extends IlluminateQueryBuilder {
         $results = new Collection($res->getData());
 
 
-        $values = $results->fetch($columns[0])->all();
+        $values = $results->pluck($columns[0])->all();
 
         // If a key was specified and we have results, we will go ahead and combine
         // the values with the keys of all of the records so that the values can
         // be accessed by the key of the rows instead of simply being numeric.
         if (!is_null($key) && count($results) > 0) {
-            $keys = $results->fetch($key)->all();
+            $keys = $results->pluck($key)->all();
 
             return array_combine($keys, $values);
         }
@@ -788,27 +783,45 @@ class Builder extends IlluminateQueryBuilder {
 
         return $this->getFresh($columns);
     }
-    
-     /**
+
+    /**
      * Alias to set the "limit" value of the query.
      *
      * @param  int  $value
      * @return \Illuminate\Database\Query\Builder|static
      */
-    public function take($value)
-    {
+    public function take($value) {
         return $this->limit($value);
     }
 
-    
     /**
      * Insert a new record into the database.
      *
      * @param  array  $values
      * @return bool
      */
-    public function insertRelationship($parent, $related, $relationship, $bindings=[]) {
+    public function insertRelationship($parent, $related, $relationship, $bindings = []) {
         $cypher = $this->grammar->compileEdge($this, $parent, $related, $relationship, $bindings);
         return $this->connection->insert($cypher, $bindings);
+    }
+
+    /**
+     * Get the columns that should be used in a list array.
+     *
+     * @param  string  $column
+     * @param  string  $key
+     * @return array
+     */
+    protected function getListSelect($column, $key) {
+        $select = is_null($key) ? [$column] : [$column, $key];
+
+        // If the selected column contains a "dot", we will remove it so that the list
+        // operation can run normally. Specifying the table is not needed, since we
+        // really want the names of the columns as it is in this resulting array.
+        return array_map(function ($column) {
+            $dot = strpos($column, '.');
+
+            return $dot === false ? $column : substr($column, $dot + 1);
+        }, $select);
     }
 }

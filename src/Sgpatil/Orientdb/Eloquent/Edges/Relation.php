@@ -155,7 +155,6 @@ abstract class Relation extends Delegate {
                 // Make them nodes
                 $this->start = $this->related->id;
                 $this->end   = $this->parent->id;
-                //exit("here");
                 // Setup relationship
                 $this->relation = $this->makeRelationship($this->type, $this->start, $this->end, $this->attributes);
             break;
@@ -194,6 +193,7 @@ abstract class Relation extends Delegate {
      */
     public function save()
     {
+        
         $this->updateTimestamps();
 
          /**
@@ -205,13 +205,14 @@ abstract class Relation extends Delegate {
         {
             
             $parent = $this->asNode($this->parent);
-            $existing = $parent->getFirstRelationship((array) $this->type, $this->getRealDirection($this->direction));
-  
-
-            if ( ! empty($existing))
-            {
-                $existing->delete();
-            }
+           
+//              //Check if relationship already exist
+//            $existing = $parent->getFirstRelationship((array) $this->type, $this->getRealDirection($this->direction));
+//  
+//            if ( ! empty($existing))
+//            {
+//                $existing->delete();
+//            }
         }
 
         $this->setRelationProperties($this->toArray());

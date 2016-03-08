@@ -49,7 +49,7 @@ abstract class HasOneOrMany extends IlluminateHasOneOrMany implements RelationIn
         $this->parent = $parent;
         $this->related = $query->getModel();
         
-        parent::__construct($query, $parent, $foreignKey, $localKey);
+        parent::__construct($query, $parent, $foreignKey->getTable(), $localKey);
     }
 
     /**

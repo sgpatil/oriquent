@@ -741,12 +741,17 @@ class CypherGrammar extends Grammar
         $from = $this->columnize([$parent->id]);
         $to = $this->columnize([$related->id]);
 
+//     code to check if relationship object exist or not
+//        
+//              if($relationship instanceof Relatio){
+//            
+//        }
         // Add content if there are the $values present
         $property_query = NULL;
         if ($values != NULL) {
             $property_query = "CONTENT " . json_encode($values);
         }
-        return "create edge $relationship from $from to $to " . $property_query;
+        return "create edge {$relationship->getType()} from $from to $to " . $property_query;
 
     }
 }
