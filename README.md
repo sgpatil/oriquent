@@ -55,6 +55,8 @@ Run below command in terminal
 $ composer require sgpatil/oriquent
 ```
 
+STEP 2 :
+
 Add the service provider in `config/app.php`:
 
 ```php
