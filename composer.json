@@ -9,7 +9,7 @@
         }
     ],
     "require": {
-   	    	"sgpatil/orientdb-php": "0.*"
+   	    	"sgpatil/orientdb-php": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "4.2.*",
