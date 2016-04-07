@@ -540,4 +540,18 @@ abstract class Model extends IlluminateModel {
         return $saved;
     }
 
+
+
+    /**
+     * Get the casts array.
+     *
+     * @return array
+     */
+    public function getCasts()
+    {
+        return $this->casts;
+    }
+
+
+
 }
