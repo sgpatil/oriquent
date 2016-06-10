@@ -368,7 +368,7 @@ class Builder extends IlluminateBuilder {
      * @param  array  $columns
      * @return \Illuminate\Pagination\Paginator
      */
-    public function simplePaginate($perPage = null, $columns = ['*'], $pageName = 'page')
+    public function simplePaginate($perPage = null, $columns = ['*'], $pageName = 'page',  $page = NULL)
     {
         $page = Paginator::resolveCurrentPage($pageName);
 
