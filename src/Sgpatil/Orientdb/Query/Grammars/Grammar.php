@@ -47,7 +47,12 @@ class Grammar extends IlluminateGrammar {
         $property = $this->getIdReplacement($value);
 
         if (strpos($property, '.') !== false) $property = explode('.', $property)[1];
-
+        
+        if(is_string($property) && is_array(json_decode($property, true)) && (json_last_error() == JSON_ERROR_NONE))
+        {// Don't wrap json data
+            return $property;
+        }
+        
         $property = str_replace(array('\\', "\0", "\n", "\r", "'", '"', "\x1a"), array('\\\\', '\\0', '\\n', '\\r', "\\'", '\\"', '\\Z'), $property);
 
         if(preg_match('~#(-)?[0-9]+:[0-9]+~', $property)) {//is (graph) id, don't wrap it or error would be thrown
