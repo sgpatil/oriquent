@@ -738,8 +738,8 @@ class CypherGrammar extends Grammar
         // simply makes creating the SQL easier for us since we can utilize the same
         // basic routine regardless of an amount of records given to us to insert.
 
-        $from = $this->columnize([$parent->id]);
-        $to = $this->columnize([$related->id]);
+        $from = $this->columnize([$parent->getAttributes()[$parent->getKeyName()]]);
+        $to = $this->columnize([$related->getAttributes()[$related->getKeyName()]]);
 
 //     code to check if relationship object exist or not
 //        
