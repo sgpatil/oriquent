@@ -8,12 +8,10 @@
             "email": "sgpatil.2803@gmail.com"
         }
     ],
-    "require": {
-   	    	"sgpatil/orientdb-php": "dev-master"
-    },
     "require-dev": {
         "phpunit/phpunit": "4.2.*",
-        "mockery/mockery": "0.9.*"
+        "mockery/mockery": "0.9.*",
+	"sgpatil/orientdb-php": "dev-master"
     },
     "autoload": {
 	"classmap": [
