@@ -13,11 +13,11 @@ Oriquent is <b>Ori</b>entdb  Elo<b>quent</b> Driver for Laravel 5
        y => Oriquent Minor Release
    
    
-   So to install oriquent on Laravel 5.2 you will need to install v5.2.\*.\*
+   So to install oriquent on Laravel 5.4 you will need to install v5.4.\*.\*
    
-   and to install oriquent on Laravel 5.1 you will need to install v5.1.\*.\*
+   and to install oriquent on Laravel 5.3 you will need to install v5.3.\*.\*
    
-   > Note : Branch `dev-master` will always point to latest release.
+   > Note : Branch `dev-master` will always point to latest release. Currently pointing to Laravel 5.4
    
    You can check complete installation guide in [Installation](#installation) Section.
 
@@ -25,7 +25,7 @@ Oriquent is <b>Ori</b>entdb  Elo<b>quent</b> Driver for Laravel 5
 
  - [Requirements](#requirements)
  - [Installation](#installation)
- - [Configuration](#Database Configuration)
+ - [Configuration](#Database)
  - [Migration](#migration)
  - [Relationships](#relationships)
 
