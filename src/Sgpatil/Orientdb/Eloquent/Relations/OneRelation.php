@@ -1,0 +1,209 @@
+<?php namespace Sgpatil\Orientdb\Eloquent\Relations;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
+abstract class OneRelation extends BelongsTo implements RelationInterface {
+
+    /**
+     * The edge direction for this relationship.
+     *
+     * @var string
+     */
+    protected $edgeDirection = 'out';
+
+    /**
+     * Initialize the relation on a set of models.
+     *
+     * @param  array   $models
+     * @param  string  $relation
+     * @return array
+     */
+    public function initRelation(array $models, $relation)
+    {
+        foreach ($models as $model)
+        {
+            // In the case of fetching nested relations, we will get an array
+            // with the first key being the model we need, and the other being
+            // the related model so we'll just take the first model out of the array.
+            if (is_array($model)) $model = reset($model);
+
+            $model->setRelation($relation, null);
+        }
+
+        return $models;
+    }
+
+    /**
+     * Get an instance of the Edge[In, Out, etc.] relationship.
+     *
+     * @param  \Illuminate\Database\Eloquent\Model $model
+     * @param  array         $attributes
+     * @return \Sgpatil\Orientdb\Eloquent\Edges\Edge[In,Out, etc.]
+     */
+    abstract function getEdge(Model $model = null, $attributes = array());
+
+    /**
+     * Get the direction of the edge for this relationship.
+     *
+     * @return string
+     */
+    public function getEdgeDirection()
+    {
+        return $this->edgeDirection;
+    }
+
+    /**
+     * Associate the model instance to the given parent.
+     *
+     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @return \Sgpatil\Orientdb\Eloquent\Edges\Relation
+     */
+    public function associate($model, $attributes = array())
+    {
+       $otherKey = ($model instanceof Model ? $model->getAttribute($this->otherKey) : $model);
+
+        $this->parent->setAttribute($this->foreignKey, $otherKey);
+
+        if ($model instanceof Model) {
+            $this->parent->setRelation($this->relation, $model);
+        }
+
+        return $this->parent;
+    }
+
+    /**
+     * Get the edge between the parent model and the given model or
+     * the related model determined by the relation function name.
+     *
+     * @param  \Illuminate\Database\Eloquent\Model $model
+     * @return \Sgpatil\Orientdb\Eloquent\Edges\Edge[In,Out, etc.]
+     */
+    public function edge(Model $model = null)
+    {
+        return $this->getEdge($model)->current();
+    }
+
+    /**
+     * Gather the keys from an array of related models.
+     *
+     * @param  array  $models
+     * @return array
+     */
+    protected function getEagerModelKeys(array $models)
+    {
+        $keys = array();
+
+        /**
+         * First we need to gather all of the keys from the parent models so we know what
+         * to query for via the eager loading query. We will add them to an array then
+         * execute a "where in" statement to gather up all of those related records.
+         */
+        foreach ($models as $model)
+        {
+            // In the case of fetching nested relations, we will get an array
+            // with the first key being the model we need, and the other being
+            // the related model so we'll just take the first model out of the array.
+            if (is_array($model)) $model = reset($model);
+
+            if ( ! is_null($value = $model->{$this->otherKey}))
+            {
+                $keys[] = $value;
+            }
+        }
+
+        /**
+         * If there are no keys that were not null we will just return an empty array in
+         * it so the query doesn't fail, but will not return any results, which should
+         * be what this developer is expecting in a case where this happens to them.
+         */
+        if (count($keys) == 0)
+        {
+            return array();
+        }
+
+        return array_values(array_unique($keys));
+    }
+
+    /**
+     * Match the eagerly loaded results to their parents.
+     *
+     * @param  array   $models
+     * @param  \Illuminate\Database\Eloquent\Collection  $results
+     * @param  string  $relation
+     * @return array
+     */
+    public function match(array $models, Collection $results, $relation)
+    {
+        // We will need the parent node placeholder so that we use it to extract related results.
+        $parent = $this->query->getQuery()->modelAsNode($this->parent->getTable());
+
+        /**
+         * Looping into all the parents to match back onto their children using
+         * the primary key to map them onto the correct instances, every single
+         * result will be having both instances at each Collection item, held by their
+         * node placeholder.
+         */
+        foreach ($models as $model)
+        {
+            $matched = $results->filter(function($result) use($parent, $model)
+            {
+                if ($result[$parent] instanceof Model)
+                {
+                    // In the case of fetching nested relations, we will get an array
+                    // with the first key being the model we need, and the other being
+                    // the related model so we'll just take the first model out of the array.
+                    if (is_array($model)) $model = reset($model);
+
+                    return $model->getKey() == $result[$parent]->getKey();
+                }
+            });
+
+            // Now that we have the matched parents we know where to add the relations.
+            // Sometimes we have more than a match so we gotta catch them all!
+            foreach ($matched as $match)
+            {
+                // In the case of fetching nested relations, we will get an array
+                // with the first key being the model we need, and the other being
+                // the related model so we'll just take the first model out of the array.
+                if (is_array($model)) $model = reset($model);
+
+                $model->setRelation($relation, $match[$relation]);
+            }
+        }
+
+        return $models;
+    }
+
+    public function getRelationName()
+    {
+        return $this->relation;
+    }
+
+    public function getRelationType()
+    {
+        return $this->foreignKey;
+    }
+
+    public function getParentNode()
+    {
+        return $this->query->getQuery()->modelAsNode($this->parent->getTable());
+    }
+
+    public function getRelatedNode()
+    {
+        return $this->query->getQuery()->modelAsNode($this->related->getTable());
+    }
+
+    public function getLocalKey()
+    {
+        return $this->otherKey;
+    }
+
+    public function getParentLocalKeyValue()
+    {
+        return $this->parent->{$this->otherKey};
+    }
+
+}
