@@ -25,7 +25,7 @@ Oriquent is <b>Ori</b>entdb  Elo<b>quent</b> Driver for Laravel 5
 
  - [Requirements](#requirements)
  - [Installation](#installation)
- - [Configuration](#Database)
+ - [Configuration](#database-configuration)
  - [Migration](#migration)
  - [Relationships](#relationships)
 
