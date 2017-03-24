@@ -10,8 +10,6 @@ use Sgpatil\Orientdb\Query\Grammars\Grammar;
 use Illuminate\Database\Query\Builder as IlluminateQueryBuilder;
 
 class Builder extends IlluminateQueryBuilder {
-
-   
     /**
      * Create a new query builder instance.
      *
@@ -26,7 +24,6 @@ class Builder extends IlluminateQueryBuilder {
 
         $this->client = $connection->getClient();
     }
-
 
     /**
      * Insert a new record and get the value of the primary key.

@@ -47,5 +47,4 @@ class DatabaseManager extends IlluminateDatabaseManager
         $this->factory = $factory;
     }
 
-  
 }

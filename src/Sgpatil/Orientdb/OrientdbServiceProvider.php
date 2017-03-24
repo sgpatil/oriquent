@@ -57,7 +57,7 @@ class OrientdbServiceProvider extends ServiceProvider {
             if($databases[$defaultConnection]['driver']!='orientdb') {
                 $defaultConnection = $app['config']['database.default_nosql'];
             }
-            
+
             if(empty($defaultConnection)){
                 throw new \Exception('Invalid database connection type. Please check DB_CONNECTION in database configuration file or in .env file.');
             }
