@@ -145,17 +145,6 @@ class Connection extends IlluminateConnection {
     }
 
     /**
-     * Get an option from the configuration options.
-     *
-     * @param  string   $option
-     * @param  mixed    $default
-     * @return mixed
-     */
-    public function getConfig($option, $default = null) {
-        return array_get($this->config, $option, $default);
-    }
-
-    /**
      * Get the  driver name.
      *
      * @return string
