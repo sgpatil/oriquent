@@ -4,6 +4,7 @@ namespace Sgpatil\Orientdb\Eloquent\Relations;
 
 use Sgpatil\Orientdb\Eloquent\Model;
 use Sgpatil\Orientdb\Eloquent\Builder;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Collection;
 use Sgpatil\Orientdb\Eloquent\Edges\Finder;
 use Sgpatil\Orientdb\Eloquent\Edges\Relation;
@@ -48,7 +49,7 @@ abstract class HasOneOrMany extends IlluminateHasOneOrMany implements RelationIn
         $this->query = $query;
         $this->parent = $parent;
         $this->related = $query->getModel();
-        
+
         parent::__construct($query, $parent, $foreignKey->getTable(), $localKey);
     }
 
@@ -591,6 +592,16 @@ abstract class HasOneOrMany extends IlluminateHasOneOrMany implements RelationIn
      */
     public function getEdgeDirection() {
         return $this->edgeDirection;
+    }
+
+    /**
+     * Get the default foreign key name for the model.
+     *
+     * @return string
+     */
+    public function getForeignKey()
+    {
+        return Str::snake(class_basename($this)).'_'.$this->foreignKey;
     }
 
 }
