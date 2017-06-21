@@ -12,7 +12,7 @@ class {{class}} extends Migration {
 	 */
 	public function up()
 	{
-		Schema::connection('orientdb')->create('{{table}}', function(Blueprint $table)
+		Schema::create('{{table}}', function(Blueprint $table)
 		{
 			$table->increments('id');
 			$table->timestamps();
@@ -26,7 +26,7 @@ class {{class}} extends Migration {
 	 */
 	public function down()
 	{
-		Schema::connection('orientdb')->drop('{{table}}');
+		Schema::drop('{{table}}');
 	}
 
 }
