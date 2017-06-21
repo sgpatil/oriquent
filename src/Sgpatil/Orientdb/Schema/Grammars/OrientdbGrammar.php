@@ -101,6 +101,7 @@ class OrientdbGrammar extends Grammar {
 
         $columns = $this->prefixArray('add', $this->getColumns($blueprint));
 
+        // @TODO: this one may also not work; depreated syntax
         return 'alter table ' . $table . ' ' . implode(', ', $columns);
     }
 
@@ -185,11 +186,12 @@ class OrientdbGrammar extends Grammar {
      * @return string
      */
     public function compileDropColumn(Blueprint $blueprint, Fluent $command) {
-        $columns = $this->prefixArray('drop', $this->wrapArray($command->columns));
+        $table  = $this->wrapTable($blueprint);
+        // @TODO: always one column; or more?
+        $column = $command->columns[0];
 
-        $table = $this->wrapTable($blueprint);
-
-        return 'alter table ' . $table . ' ' . implode(', ', $columns);
+        // @TODO: changed syntax; is there a better writing
+        return 'DROP PROPERTY ' . $table . '.' . $column . ' IF EXISTS';
     }
 
     /**

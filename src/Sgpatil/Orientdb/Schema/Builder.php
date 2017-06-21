@@ -83,7 +83,11 @@ class Builder {
      * @return \Illuminate\Database\Schema\Blueprint
      */
     public function table($table, Closure $callback) {
-        $this->build($this->createBlueprint($table, $callback));
+        $blueprint = $this->createBlueprint($table, $callback);
+        $this->build($blueprint);
+        $class = $this->connection->getClient()->makeClass($blueprint->getTable());
+        $class->setProperty($blueprint->getColumns());
+        $class->saveProperties();
     }
 
     /**
