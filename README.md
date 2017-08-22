@@ -161,3 +161,5 @@ Unable to find has_phone() method ? [See full example.](https://github.com/sgpat
 
 
 Want to learn more? [See the wiki.](https://github.com/sgpatil/orientdb-laravel-5/wiki)
+
+
