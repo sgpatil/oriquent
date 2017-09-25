@@ -5,7 +5,7 @@ namespace Sgpatil\Orientdb;
 use Sgpatil\Orientdb\Connection;
 use Sgpatil\Orientdb\General;
 
-class CommonTest extends BaseTest {
+class ConnectionTest extends BaseTest {
 
  
      public function testConnection()

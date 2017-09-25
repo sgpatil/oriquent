@@ -1,7 +1,29 @@
 language: php
+
 php:
-  - '5.4'
-  - '5.5'
-  - '5.6'
-script:
-- phpunit --bootstrap tests/BaseTest.php --debug --coverage-text test
+  - 5.6
+  - 7.0
+
+before_script:
+  # install dependencies to add repos
+  - sudo apt-get install -y python-software-properties
+  - sudo add-apt-repository -y ppa:webupd8team/java
+  - sudo apt-get update
+  # install oracle jdk 8
+  - sudo apt-get install -y oracle-java8-installer
+  - sudo update-alternatives --auto java
+  - sudo update-alternatives --auto javac
+  - export JAVA_HOME="/usr/lib/jvm/java-8-oracle"
+  # install Neo4j
+  - sudo rm -fv /etc/init.d/neo4j
+  - wget -O - wget https://orientdb.com/download.php?file=orientdb-community-2.1.3.tar.gz
+    sudo tar -xf download.php?file=orientdb-community-2.1.3.tar.gz -C /opt
+  - sleep 10
+  - cd /opt/orientdb-community-2.1.3/bin
+  - sudo ./server.sh
+
+  # install composer
+  - composer self-update
+  - composer install --prefer-source --no-interaction --dev
+
+script: vendor/bin/phpunit
