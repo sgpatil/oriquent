@@ -14,10 +14,9 @@ before_script:
   - sudo update-alternatives --auto java
   - sudo update-alternatives --auto javac
   - export JAVA_HOME="/usr/lib/jvm/java-8-oracle"
-  # install Neo4j
-  - sudo rm -fv /etc/init.d/neo4j
+
   - wget -O - wget https://orientdb.com/download.php?file=orientdb-community-2.1.3.tar.gz
-    sudo tar -xf download.php?file=orientdb-community-2.1.3.tar.gz -C /opt
+  - sudo tar -xf download.php?file=orientdb-community-2.1.3.tar.gz -C /opt
   - sleep 10
   - cd /opt/orientdb-community-2.1.3/bin
   - sudo ./server.sh
@@ -27,4 +26,3 @@ before_script:
   - composer install --prefer-source --no-interaction --dev
 
 script: vendor/bin/phpunit
-
