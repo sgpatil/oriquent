@@ -72,7 +72,11 @@ make `orientdb` your default connection:
 
 ```php
 'default' => 'orientdb',
-'default_nosql' => 'orientdb', //optional if you are using orientdb as a secondary connection
+```
+
+And optionally, if you want to use orientdb as a secondary connection
+```php
+'default_nosql' => 'orientdb',
 ```
 
 Add the connection defaults:
@@ -157,3 +161,5 @@ Unable to find has_phone() method ? [See full example.](https://github.com/sgpat
 
 
 Want to learn more? [See the wiki.](https://github.com/sgpatil/orientdb-laravel-5/wiki)
+
+

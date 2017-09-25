@@ -27,3 +27,4 @@ before_script:
   - composer install --prefer-source --no-interaction --dev
 
 script: vendor/bin/phpunit
+

@@ -44,7 +44,7 @@ class Builder extends IlluminateQueryBuilder {
     }
 
     /**
-     * Update a record in the database.  
+     * Update a record in the database.
      *
      * @param  array  $values
      * @return int
@@ -560,7 +560,7 @@ class Builder extends IlluminateQueryBuilder {
             if (isset($data)) {
                 $result = array_change_key_case((array) $data[0]);
 
-                return $result['aggregate'];
+                return isset($result['aggregate']) ? $result['aggregate'] : 1;
             }
 
             return $results->current()[0];
