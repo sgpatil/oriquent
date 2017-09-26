@@ -26,3 +26,8 @@ before_script:
   - composer install --prefer-source --no-interaction --dev
 
 script: vendor/bin/phpunit
+
+env:
+  - ORIENTDB_ROOT_PASSWORD="root"
+  - JAVA_HOME="/usr/lib/jvm/java-8-oracle"
+  - JRE_HOME="/usr/lib/jvm/java-8-oracle"
