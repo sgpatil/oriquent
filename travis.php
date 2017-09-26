@@ -1,3 +1,1 @@
 Travis check
-checking
-check
